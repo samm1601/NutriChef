@@ -4,6 +4,8 @@ NutriChef Pro is an **AI-powered recipe generator and meal planner** designed to
 It uses **OpenAI** for recipe generation, wrapped inside a modern **FastAPI backend** with a clean **HTML/CSS/JavaScript frontend**.  
 
 ---
+![image alt](https://github.com/samm1601/NutriChef/blob/f95277a8a695184cb4fdcb485f75039b67550d3f/image.png)
+
 
 ## 🚀 Features
 
