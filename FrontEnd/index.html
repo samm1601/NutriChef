@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NutriChef - AI Meal Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    .recipe-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 32px;
+    }
+
+    .section-title {
+      color: #1976d2;
+      font-size: 1.6em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .recipe-section input {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .gradient-btn {
+      display: block;
+      margin: 0 auto 18px auto;
+      background: linear-gradient(90deg, #2196f3, #21cbf3);
+      color: #fff !important;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px #0001;
+    }
+
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-content input,
+    .tab-content button,
+    .tab-content pre {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .tab-content h2 {
+      text-align: center;
+      margin-bottom: 12px;
+      color: #1976d2;
+      font-size: 1.6em;
+      font-weight: 700;
+    }
+
+    .wide-input {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 16px;
+      text-align: center;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #b3e5fc;
+      border-radius: 8px;
+      background: #f7fbff;
+      transition: border 0.2s;
+    }
+    .wide-input:focus {
+      border: 1.5px solid #1976d2;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <div class="chef-logo-bg">
+        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+          <path d="M34 20C34 15.5817 30.4183 12 26 12C23.2386 12 20.8348 13.6131 19.6842 16.0001C17.0672 16.0001 15 18.0673 15 20.6842C15 23.3012 17.0672 25.3684 19.6842 25.3684H34V20Z" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="18" y="28" width="12" height="6" rx="2" stroke="#fff" stroke-width="3"/>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-black">NutriChef</span>
+        <span class="subtitle">AI Meal Planner</span>
+      </div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <i class="fa fa-bars"></i>
+    </div>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <button class="feature-btn" onclick="showTab('recipe');toggleMenu()"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Recipe</button>
+      <button class="feature-btn" onclick="showTab('meal');toggleMenu()"><i class="fa-regular fa-calendar"></i> Meal Plan</button>
+      <button class="feature-btn" onclick="showTab('calorie');toggleMenu()"><i class="fa-solid fa-calculator"></i> Calories</button>
+    </div>
+  </nav>
+  <main>
+    <section class="hero">
+      <h1 class="hero-headline">
+        <span class="headline-main" style="font-size: 86px;">Smart Nutrition</span>
+        <span class="headline-gradient" style="font-size: 66px;">Made Simple</span>
+      </h1>
+      <p class="subtitle-hero">Generate personalized recipes, plan your meals, and track your calories with the power of AI. Your journey to healthier eating starts here.</p>
+      <div class="feature-buttons">
+        <button class="feature-btn" onclick="showTab('recipe')">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI-Powered Recipes
+        </button>
+        <button class="feature-btn" onclick="showTab('meal')">
+          <i class="fa-regular fa-calendar"></i> Smart Meal Planning
+        </button>
+        <button class="feature-btn" onclick="showTab('calorie')">
+          <i class="fa-solid fa-calculator"></i> Calorie Tracking
+        </button>
+      </div>
+    </section>
+    <section id="recipe" class="tab">
+      <div class="tab-content">
+        <div class="recipe-section">
+          <h2 class="section-title" style="color: black;">AI Recipe Generator</h2>
+          <input id="ingredients" class="wide-input" placeholder="e.g. chicken, tomatoes, quinoa, spinach...">
+          <button class="gradient-btn" onclick="generateRecipe()">Generate Recipe</button>
+          <pre id="recipe-result"></pre>
+        </div>
+      </div>
+    </section>
+    <section id="meal" class="tab">
+      <div class="tab-content">
+        <h2 style="color: black;">Meal Planner</h2>
+        <input id="preferences" class="wide-input" placeholder="Food preferences (e.g. vegetarian, spicy)">
+        <input id="restrictions" class="wide-input" placeholder="Dietary restrictions (e.g. gluten-free)">
+        <button class="gradient-btn" onclick="generateMealPlan()">Create Meal Plan</button>
+        <pre id="meal-result"></pre>
+      </div>
+    </section>
+    <section id="sub" class="tab">
+      <h2>Ingredient Substitutions</h2>
+      <input id="ingredient" placeholder="Ingredient to substitute">
+      <button onclick="generateSub()">Suggest Substitutions</button>
+      <pre id="sub-result"></pre>
+    </section>
+    <section id="calorie" class="tab">
+      <div class="tab-content">
+        <h2 style="color: black;">Calorie Counter</h2>
+        <input id="foods" class="wide-input" placeholder="Enter foods or ingredients (e.g. apple, bread, chicken)">
+        <button class="gradient-btn" onclick="generateCalories()">Estimate Calories</button>
+        <pre id="calorie-result"></pre>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
